@@ -1,0 +1,20 @@
+module EratosthenesTest
+imports
+    from Eratosthenes all,
+    from UnitTesting
+        operations
+            assert: bool * seq of char ==> () renamed assert;
+            assertEquals: ? * ? * seq of char ==> () renamed assertEquals;
+            assertApproxEquals: real * real * real * seq of char ==> ()
+                renamed assertApproxEquals;
+            shouldFail: (bool -> ?) * seq of char ==> () renamed shouldFail;
+exports all
+definitions
+operations
+    testCreateSieve : () ==> ()
+    testCreateSieve() ==
+        (Eratosthenes`createSieve(2);
+        Eratosthenes`createSieve(3);
+        Eratosthenes`createSieve(100);
+        shouldFail(lambda b : bool & Eratosthenes`createSieve(0), "should not be 1"));
+end EratosthenesTest
