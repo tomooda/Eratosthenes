@@ -1,0 +1,1 @@
+{n | n in set {3,...,50} & n mod 2 = 1 and sieve(n div 2)}

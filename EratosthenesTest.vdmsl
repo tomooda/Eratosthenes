@@ -18,4 +18,9 @@ operations
         assert(Eratosthenes`pre_createSieve(3, sieve), "createSieve(3)");
         assert(Eratosthenes`pre_createSieve(100, sieve), "createSieve(100)");
         assert(not Eratosthenes`pre_createSieve(1, sieve), "should not be 1"));
+    
+    test_isPrime : () ==> ()
+    test_isPrime() ==
+        (assert(Eratosthenes`isPrime(37), "37 is a prime");
+        assert(not Eratosthenes`isPrime(27), "27 is not a prime"));
 end EratosthenesTest
