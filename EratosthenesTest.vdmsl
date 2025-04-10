@@ -11,10 +11,11 @@ imports
 exports all
 definitions
 operations
-    testCreateSieve : () ==> ()
-    testCreateSieve() ==
-        (Eratosthenes`createSieve(2);
-        Eratosthenes`createSieve(3);
-        Eratosthenes`createSieve(100);
-        shouldFail(lambda b : bool & Eratosthenes`createSieve(0), "should not be 1"));
+    test_pre_createSieve : () ==> ()
+    test_pre_createSieve() ==
+        (dcl sieve:Eratosthenes`Sieve := mk_Eratosthenes`Sieve([]);
+        assert(Eratosthenes`pre_createSieve(2, sieve), "createSieve(2)");
+        assert(Eratosthenes`pre_createSieve(3, sieve), "createSieve(3)");
+        assert(Eratosthenes`pre_createSieve(100, sieve), "createSieve(100)");
+        assert(not Eratosthenes`pre_createSieve(1, sieve), "should not be 1"));
 end EratosthenesTest

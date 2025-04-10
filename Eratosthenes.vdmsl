@@ -6,8 +6,10 @@ state Sieve of
 init s == s = mk_Sieve([])
 end
 operations
-    createSieve : nat1 ==> ()
-    createSieve(size) == sieve := [false | i in set {1, ..., size}]
+    createSieve : nat1 ==> char
+    createSieve(size) ==
+        (sieve := [false | i in set {1, ..., size}];
+        return 'a')
     pre  size > 1
     post  len sieve = size and (forall b in seq sieve & not b);
 end Eratosthenes
