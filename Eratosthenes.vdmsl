@@ -17,15 +17,17 @@ operations
     
     createSieve : nat1 ==> ()
     createSieve(size) ==
-        (sieve := [true | i in set {1, ..., size div 2 + size mod 2 - 1}];
+        (dcl
+            newSieve:seq of bool := [true | i in set {1, ..., size div 2 + size mod 2 - 1}];
         (dcl n:nat1 := 3;
         while n  * n <= size
         do
-            if
-                sieve(n div 2)
+            (if
+                newSieve(n div 2)
             then
-                (for m = n  * 3 to  size by  n  * 2 do sieve(m div 2) := false;
-                n := n + 2)))
+                for m = n  * 3 to  size by  n  * 2 do newSieve(m div 2) := false;
+            n := n + 2));
+        sieve := newSieve)
     pre  size > 1
     post 
         if size mod 2 = 0 then (size - 1) div 2 = len sieve else size div 2 = len sieve;
