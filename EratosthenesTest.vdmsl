@@ -11,25 +11,37 @@ imports
 exports all
 definitions
 operations
+    test_pre_isPrime : () ==> ()
+    test_pre_isPrime() ==
+        (shouldFail(lambda x : bool & Eratosthenes`isPrime(1), "shouldn't test 1");
+        Eratosthenes`isPrime(2);
+        Eratosthenes`isPrime(3);
+        Eratosthenes`isPrime(4);
+        Eratosthenes`isPrime(5);
+        skip);
+    
     test_isPrime : () ==> ()
     test_isPrime() ==
-        (Eratosthenes`isPrime(36);
-        if
-            false
-        then
-            assertEquals(#act(Eratosthenes`createSieve), 0, "not created");
-        if false then assertEquals(#rd(Eratosthenes`sieve), 0, "no read access");
-        if false then assertEquals(#wr(Eratosthenes`sieve), 0, "no write access");
-        Eratosthenes`isPrime(37);
-        if false then assertEquals(#act(Eratosthenes`createSieve), 1, " created");
-        if false then assertEquals(#rd(Eratosthenes`sieve), 2, "2 read access");
-        if false then assertEquals(#wr(Eratosthenes`sieve), 1, "1 write access");
-        Eratosthenes`isPrime(23);
-        if
-            false
-        then
-            assertEquals(#act(Eratosthenes`createSieve), 1, "not created");
-        if false then assertEquals(#rd(Eratosthenes`sieve), 4, "2 read access");
-        if false then assertEquals(#wr(Eratosthenes`sieve), 1, "no write access");
+        (dcl numAct:nat := 0;
+        shouldFail(lambda x : bool & Eratosthenes`isPrime(1), "shouldn't test 1");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(Eratosthenes`isPrime(2), "2 is prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 1, "called");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(Eratosthenes`isPrime(3), "3 is prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 1, "called");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(Eratosthenes`isPrime(5), "5 is prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 1, "called");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(Eratosthenes`isPrime(5), "5 is prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 0, "not called");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(not Eratosthenes`isPrime(6), "6 is not prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 1, "called");
+        numAct := #act(Eratosthenes`createSieve);
+        assert(Eratosthenes`isPrime(5), "5 is prime");
+        assertEquals(#act(Eratosthenes`createSieve) - numAct, 0, "not called");
+        numAct := #act(Eratosthenes`createSieve);
         skip);
 end EratosthenesTest
