@@ -29,4 +29,13 @@ operations
         len sieve = size
         and (forall n in set {2, ..., size} &
                 sieve(n) <=> not (exists p in set {2, ..., n - 1} & n mod p = 0));
+traces
+    Singles:
+        let n in set {2, ..., 50} in isPrime(n);
+    
+    Pairs:
+        let n1, n2 in set {2, ..., 50}
+        in
+            (isPrime(n1);
+            isPrime(n2));
 end Eratosthenes
