@@ -16,13 +16,14 @@ operations
     
     createSieve : nat1 ==> ()
     createSieve(size) ==
-        (dcl newSieve:seq of bool := [true | i in set {1, ..., size}];
-        (dcl n:nat1 := 2;
+        (dcl
+            newSieve:seq of bool := [true | i in set {1, ..., size}],
+            n:nat1 := 2;
         newSieve(1) := false;
         while n  * n <= size
         do
             (if newSieve(n) then for m = n  * 2 to  size by  n do newSieve(m) := false;
-            n := n + 1));
+            n := n + 1);
         sieve := newSieve)
     pre  size >= 2
     post 
