@@ -15,21 +15,19 @@ operations
         RESULT <=> not (exists p in set {2, ..., n - 1} & n mod p = 0);
     
     createSieve : nat1 ==> ()
-    createSieve(size) ==
-        (dcl
-            newSieve:seq of bool := [true | i in set {1, ..., size}],
-            n:nat1 := 2;
+    createSieve(n) ==
+        (dcl newSieve:seq of bool := [true | i in set {1, ..., n}], i:nat1 := 2;
         newSieve(1) := false;
-        while n  * n <= size
+        while i  * i <= n
         do
-            (if newSieve(n) then for m = n  * 2 to  size by  n do newSieve(m) := false;
-            n := n + 1);
+            (if newSieve(i) then for m = i  * 2 to  n by  i do newSieve(m) := false;
+            i := i + 1);
         sieve := newSieve)
-    pre  size >= 2
+    pre  n >= 2
     post 
-        len sieve = size
-        and (forall n in set {2, ..., size} &
-                sieve(n) <=> not (exists p in set {2, ..., n - 1} & n mod p = 0));
+        len sieve = n
+        and (forall i in set {2, ..., n} &
+                sieve(i) <=> not (exists p in set {2, ..., i - 1} & i mod p = 0));
 traces
     Singles:
         let n in set {2, ..., 50} in isPrime(n);
